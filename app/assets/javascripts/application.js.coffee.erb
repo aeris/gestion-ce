@@ -1,0 +1,15 @@
+###
+//= require jquery
+//= require jquery_ujs
+//= require jquery.ui.datepicker
+//= require jquery.ui.datepicker-fr
+//= require bootstrap-dropdown
+//= require bootstrap-alert
+//= require bootstrap-transition
+//= require bootstrap-modal
+//= require_tree .
+###
+
+$ ->
+	$.datepicker.setDefaults($.datepicker.regional['<%= I18n.locale %>']);
+	$(".datepicker").datepicker()

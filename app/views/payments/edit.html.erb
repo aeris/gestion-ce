@@ -1,0 +1,13 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= form_for @payment, builder: BootstrapFormHorizontalBuilder, html: { class: %w(form-horizontal well span6) } do |f| %>
+			<%= field_set_tag t("form.#{controller.controller_name}.#{controller.action_name}"), class: %w(compact) do %>
+				<%= f.text_field :date, value: l(f.object.date), required: true,  class: %w(datepicker) %>
+				<%= f.amount_field :amount, value: f.object.amount, required: true %>
+				<%= select_label_tag :account, options_for_select(Account.all.collect { |a| [a.name, a.id] }, f.object.budget.account.id) %>
+				<%= select_label_tag :year, options_for_select(Year.all.collect { |y| [y.year, y.id] }, f.object.budget.year.id) %>
+			<% end %>
+			<%= submit_tag t("form.#{controller.action_name}"), class: %(btn btn-primary pull-right) %>
+		<% end %>
+	</div>
+</div>

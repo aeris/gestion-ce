@@ -1,0 +1,39 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= form_for @year, html: { class: %w(form-horizontal well) } do |f| %>
+			<%= field_set_tag t('New year'), class: %w(compact) do %>
+				<div class="control-group">
+					<div class="controls">
+						<%= f.text_field :year, required: true, type: :number, class: 'span12' %>
+					</div>
+				</div>
+			<% end %>
+			<div class="row-fluid">
+				<%= field_set_tag t('Residual'), class: %w(span6 compact) do %>
+					<% Account.all.each do |account|
+						name = "residual_#{account.tag}" %>
+						<div class="control-group">
+							<%= label_tag name, account.name, class: %w(control-label) %>
+							<div class="controls">
+								<%= text_field_tag name, params[name], required: true, type: :number, class: 'span12' %>
+							</div>
+						</div>
+					<% end %>
+				<% end %>
+				<%= field_set_tag t('Workforce'), class: %w(span6 compact) do %>
+					<% Agency.order(:name).each do |agency|
+						name = "workforce_#{agency.id}" %>
+						<div class="control-group">
+							<%= label_tag name, agency.name, class: %w(control-label) %>
+							<div class="controls">
+								<%= text_field_tag name, params[name], required: true, type: :number, class: 'span12' %>
+							</div>
+						</div>
+					<% end %>
+				<% end %>
+			</div>
+
+			<%= submit_tag t('Create'), class: 'btn btn-primary pull-right' %>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  date: 2013-08-31
+  year: 
+  agency: 
+  plan_debit: 1.5
+  plan_credit: 1.5
+  closed: false
+
+two:
+  description: MyString
+  date: 2013-08-31
+  year: 
+  agency: 
+  plan_debit: 1.5
+  plan_credit: 1.5
+  closed: false

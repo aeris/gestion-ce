@@ -1,0 +1,95 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span10">
+			<h3>
+				<%= l @activity.date %> - <%= @activity.description %>
+				<%= link_to [:edit, @activity] do
+					image_tag 'empty.png', title: t('Edit activity'), class: 'sprite-silk-date_edit'
+				end %>
+				<% unless @activity.closed? %>
+					<%= link_to close_activity_path(@activity), data: { confirm: t('Are you sure you want to close this activity ?') } do
+						image_tag 'empty.png', title: t('Close activity'), class: 'sprite-silk-lock_open'
+					end %>
+				<% else %>
+					<%= link_to close_activity_path(@activity), data: { confirm: t('Are you sure you want to activate this activity ?') } do
+						image_tag 'empty.png', title: t('Activate activity'), class: 'sprite-silk-lock'
+					end %>
+				<% end %>
+			</h3>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<h3><%= t('Entries') %></h3>
+				</div>
+				<table class="table table-bordered table-condensed row-fluid">
+					<thead>
+					<tr>
+						<th></th>
+						<th><%= t('Date') %></th>
+						<th><%= t('Object') %></th>
+						<th><%= t('Description') %></th>
+						<th><%= t('Amount') %></th>
+						<th><%= t('Type') %></th>
+					</tr>
+					</thead>
+					<tbody>
+					<% @activity.entries.sort_by(&:date).each do |e| %>
+						<tr>
+							<th>
+								<%= link_to [:edit, e] do
+									image_tag 'empty.png', title: t('Edit entry'), class: 'sprite-silk-coins_edit'
+								end %>
+								<%= link_to e, method: :delete, data: { confirm: t('Are you sure you want to delete this entry ?') } do
+									image_tag 'empty.png', title: t('Delete entry'), class: 'sprite-silk-coins_delete'
+								end %>
+							</th>
+							<td><%= l e.date %> </td>
+							<td><%= e.to %> </td>
+							<td><%= e.description %> </td>
+							<%= content_tag :td, number_to_currency(e.amount), class: e.debit? ? 'debit' : 'credit' %>
+							<td><%= t e.category %></td>
+						</tr>
+					<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="span6">
+			<div class="container-fluid">
+				<table class="table table-bordered table-condensed row-fluid">
+					<thead>
+					<tr>
+						<th></th>
+						<th><%= t('Debit') %></th>
+						<th><%= t('Credit') %></th>
+						<th><%= t('Total') %></th>
+						<th>%</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<th><%= t('Planned') %></th>
+						<td><%= number_to_currency @activity.plan_debit %></td>
+						<td><%= number_to_currency @activity.plan_credit %></td>
+						<td><%= number_to_currency @activity.plan_total %></td>
+						<%= content_tag :td, activity_progress_bar(@activity.plan_percentage) %>
+					</tr>
+					<tr>
+						<th><%= t('Realized') %></th>
+						<td><%= number_to_currency @activity.debit %></td>
+						<td><%= number_to_currency @activity.credit %></td>
+						<td><%= number_to_currency @activity.total %></td>
+						<%= content_tag :td, activity_progress_bar(@activity.percentage) %>
+					</tr>
+					</tbody>
+				</table>
+				<div class="row-fluid">
+					<%= render 'entries/entry', entry: @entry, action: :new %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

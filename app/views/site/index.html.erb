@@ -1,0 +1,61 @@
+<%= render 'modal_activity' %>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span6">
+			<% Account.all.each do |account| %>
+				<div class="row-fluid">
+					<div class="span12">
+						<%= render 'budget', budget: @year.budget(account) %>
+					</div>
+				</div>
+			<% end %>
+		</div>
+		<div class="span6">
+			<h3><%= t 'Activities' %></h3>
+			<table class="table table-bordered table-striped table-condensed">
+				<thead>
+				<tr>
+					<th>
+						<%= link_to '#modal-activity', role: :button, 'data-toggle' => :modal do
+							image_tag 'empty.png', alt: t('Create activity'), class: 'sprite-silk-date_add'
+						end %>
+						<%=
+							link_to(url_for(params.merge all: !to_bool(:all))) do
+							image_tag 'empty.png', title: t('Show all activities'), class: 'sprite-silk-date_magnify'
+						end %>
+					</th>
+					<th><%= t('Agency') %></th>
+					<th><%= t('Activity') %></th>
+					<th><%= t('Date') %></th>
+					<th><%= t('Budget') %></th>
+				</tr>
+				</thead>
+				<tbody>
+				<%
+				   activities = Activity.where(year_id: @year, agency_id: @me.agency)
+				   activities = activities.where(closed: false) unless to_bool :all
+				   activities.order('date').each do |activity| %>
+					<%= content_tag :tr, class: activity.closed? ? :closed : nil do %>
+						<td>
+							<%= link_to activity do
+								image_tag 'empty.png', title: t('Show activity'), class: 'sprite-silk-date_go'
+							end %>
+							<% if activity.closed? %>
+								<%= image_tag 'empty.png', title: t('Closed activity'), class: 'sprite-silk-lock' %>
+							<% else %>
+								<%= link_to activity, method: :delete, data: { confirm: t('Are you sure you want to delete this activity ?') } do
+									image_tag 'empty.png', title: t('Delete activity'), class: 'sprite-silk-date_delete'
+								end %>
+							<% end %>
+						</td>
+						<td><%= activity.agency.name %></td>
+						<td><%= activity.description %></td>
+						<td><%= l activity.date %></td>
+						<td><%= number_to_currency activity.total %></td>
+					<% end
+					   end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= form_tag payments_path, class: %w(form-horizontal well span6) do %>
+			<%= field_set_tag t("form.#{controller.controller_name}.#{controller.action_name}"), class: %w(compact) do %>
+				<%= text_field_label_tag :date, l(params[:date]), required: true,  class: %w(datepicker) %>
+				<% Account.all.each do |account| %>
+					<%= amount_field_label_tag account.tag, params[account.tag] %>
+				<% end %>
+				<%= select_label_tag :year, options_for_select(Year.all.collect { |y| [y.year, y.id] }, Year.current.id) %>
+			<% end %>
+			<%= submit_tag t("form.#{controller.action_name}"), class: %(btn btn-primary pull-right) %>
+		<% end %>
+	</div>
+</div>

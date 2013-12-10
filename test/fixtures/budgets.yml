@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  year: 
+  account: 
+  residual: 1.5
+
+two:
+  year: 
+  account: 
+  residual: 1.5

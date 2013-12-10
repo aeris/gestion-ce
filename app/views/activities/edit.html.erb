@@ -1,0 +1,15 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= form_for @activity, builder: BootstrapFormHorizontalBuilder, html: { class: %w(form-horizontal span5 well) } do |f| %>
+			<%= field_set_tag t("form.#{controller.controller_name}.#{controller.action_name}"), class: %w(compact) do %>
+				<%= f.text_field :description, placeholder: t('Name'), required: true %>
+				<%= f.text_field :date, required: true, type: :date, value: l(f.object.date), class: :datepicker %>
+				<%= f.text_field :plan_debit, type: :number, required: true %>
+				<%= f.text_field :plan_credit, type: :number, required: true %>
+				<%= f.select :agency_id, options_for_select(Agency.all.collect { |a| [a.name, a.id] }, @me.agency.id), include_blank: true %>
+				<%= f.select :year_id, options_for_select(Year.all.collect { |y| [y.year, y.id] }, Year.current.id), include_blank: true %>
+				<%= f.submit t("form.#{controller.action_name}"), class: %w(btn btn-primary pull-right) %>
+			<% end %>
+		<% end %>
+	</div>
+</div>

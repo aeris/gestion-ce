@@ -1,0 +1,8 @@
+<div class="row">
+	<%= form_tag login_path, class: %(login-form well span4 offset4) do %>
+		<%= field_set_tag(t 'Sign in') {} %>
+		<%= text_field_prepend_tag 'icon-user', :login_form_username, nil, name: :username, placeholder: t('Username') %>
+		<%= password_field_prepend_tag :login_form_password, nil, name: :password, placeholder: t('Password'), required: true %>
+		<%= submit_tag t('Sign in'), class: %(btn btn-primary pull-right) %>
+	<% end %>
+</div>

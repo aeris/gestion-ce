@@ -1,0 +1,40 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span8 offset2">
+			<% @agencies.each do |agency| %>
+				<h3><%= @year.year %> &mdash; <%= agency.name %></h3>
+				<table class="table table-bordered table-striped table-condensed">
+					<thead>
+					<tr>
+						<th></th>
+						<th><%= t('Activity') %></th>
+						<th><%= t('Date') %></th>
+						<th><%= t('Debit') %></th>
+						<th><%= t('Credit') %></th>
+						<th><%= t('Total') %></th>
+						<th><%= t('%') %></th>
+					</tr>
+					</thead>
+					<tbody>
+					<%
+					   Activity.where(year_id: @year, agency_id: agency).order('date').each do |activity| %>
+						<%= content_tag :tr, class: activity.closed? ? :closed : nil do %>
+							<td>
+								<% if activity.closed? %>
+									<%= image_tag 'empty.png', title: t('Closed activity'), class: 'sprite-silk-lock' %>
+								<% end %>
+							</td>
+							<td><%= activity.description %></td>
+							<td><%= l activity.date %></td>
+							<td class="debit"><%= number_to_currency activity.debit %></td>
+							<td class="credit"><%= number_to_currency activity.credit %></td>
+							<%= content_tag :td, number_to_currency(activity.total), class: activity.total < 0 ? 'debit' : 'credit' %>
+							<%= content_tag :td, activity_progress_bar(activity.percentage) %>
+						<% end
+						   end %>
+					</tbody>
+				</table>
+			<% end %>
+		</div>
+	</div>
+</div>

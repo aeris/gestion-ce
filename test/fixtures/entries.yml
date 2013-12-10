@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-08-31
+  amount: 1.5
+  category: MyString
+  state: MyString
+  bank: MyString
+  budget: 
+  agency: 
+  activity: 
+
+two:
+  date: 2013-08-31
+  amount: 1.5
+  category: MyString
+  state: MyString
+  bank: MyString
+  budget: 
+  agency: 
+  activity: 

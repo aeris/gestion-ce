@@ -1,0 +1,57 @@
+<% account, year = budget.account, budget.year %>
+<h3><%= account.name %> <%= year.year %></h3>
+<table class="table table-bordered table-condensed">
+	<thead>
+	<tr>
+		<th></th>
+		<th><%= t 'Agency' %></th>
+		<th><%= t 'Workforce' %></th>
+		<th><%= t 'Budget' %></th>
+		<th><%= t 'Used' %></th>
+		<th><%= t 'Remaining' %></th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	<% year.agencies.each do |agency| %>
+		<tr>
+			<th>
+				<%= link_to activities_path(agency: agency, year: year) do
+					image_tag 'empty.png', title: t('Show'), class: 'sprite-silk-magnifier'
+				end %>
+			</th>
+			<th><%= agency.name %></th>
+			<td><%= agency.employees year %></td>
+			<td><%= number_to_currency agency.available budget %></td>
+			<td><%= number_to_currency agency.used budget %></td>
+			<% remaining = agency.remaining budget %>
+			<%= content_tag :td, number_to_currency(remaining), class: remaining >= 0 ? 'alert-success' : 'alert-error' %>
+			<td>
+				<%= agency_progress_bar agency, budget %>
+			</td>
+		</tr>
+	<% end %>
+	<tr>
+		<th></th>
+		<th><%= t 'Common' %></th>
+		<td></td>
+		<td><%= number_to_currency budget.common_credit %></td>
+		<td><%= number_to_currency budget.common_debit %></td>
+		<td><%= number_to_currency budget.common %></td>
+		<td></td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<th></th>
+		<th>Total</th>
+		<td><%= budget.year.employees %></td>
+		<td><%= number_to_currency budget.available %></td>
+		<td><%= number_to_currency budget.used %></td>
+		<%= content_tag :td, number_to_currency(budget.remaining), class: budget.remaining >= 0 ? 'alert-success' : 'alert-error' %>
+		<td>
+			<%= budget_progress_bar budget %>
+		</td>
+	</tr>
+	</tfoot>
+</table>

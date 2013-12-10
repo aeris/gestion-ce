@@ -1,0 +1,27 @@
+<%
+	classes = %w(form-horizontal form-compact well)
+	classes << span if defined? span
+	activity = entry.activity
+%>
+<%= form_for entry, builder: BootstrapFormHorizontalBuilder, html: { class: classes } do |f| %>
+	<%= field_set_tag t("form.entries.#{action}"), class: %w(compact) do %>
+		<%= f.text_field :date, class: :datepicker, value: l(f.object.date), required: true %>
+		<%= f.text_field :to, required: true %>
+		<%= f.text_field :description %>
+		<%= f.amount_field :amount, type: :number, required: true %>
+		<%= f.select :category, Entry::CATEGORIES.collect { |c| [t(c), c] } %>
+	<% end %>
+
+	<%= field_set_tag t('Check'), class: %w(compact) do %>
+		<%= f.text_field :number %>
+		<%= f.text_field :bank %>
+	<% end %>
+
+	<%= field_set_tag t('Imputation'), class: %w(compact) do %>
+		<%= f.select :activity_id, activity.find_open.collect { |a| [a.description, a.id] }, include_blank: true %>
+		<%= f.select :agency_id, activity.year.agencies.collect { |a| [a.name, a.id] }, include_blank: true %>
+		<%= f.select :budget_id, activity.year.budgets.collect { |b| [b.account.name, b.id] } %>
+	<% end %>
+
+	<%= f.submit t("form.#{action}"), class: 'btn btn-primary pull-right' %>
+<% end %>

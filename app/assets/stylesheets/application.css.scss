@@ -1,0 +1,101 @@
+/*
+ *= require jquery.ui.datepicker
+ *= require bootstrap
+ *= require bootstrap-responsive
+ *= require font-awesome
+ *= require vendor
+ *= require_self
+ *= require_tree .
+ */
+
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+.progress {
+	margin: 0;
+}
+
+fieldset.compact legend {
+	margin: 0;
+}
+
+.table tbody tr {
+	&.success > th {
+		background-color: $successBackground;
+	}
+	&.error > th {
+		background-color: $errorBackground;
+	}
+	&.warning > th {
+		background-color: $warningBackground;
+	}
+	&.info > th {
+		background-color: $infoBackground;
+	}
+}
+
+// Hover states for .table-hover
+.table-hover tbody tr {
+	&.success:hover > th {
+		background-color: darken($successBackground, 5%);
+	}
+	&.error:hover > th {
+		background-color: darken($errorBackground, 5%);
+	}
+	&.warning:hover > th {
+		background-color: darken($warningBackground, 5%);
+	}
+	&.info:hover > th {
+		background-color: darken($infoBackground, 5%);
+	}
+}
+
+.legend {
+	padding: 0;
+	margin-bottom: $baseLineHeight;
+	font-size: $baseFontSize * 1.5;
+	line-height: $baseLineHeight * 2;
+	color: $grayDark;
+	border: 0;
+	border-bottom: 1px solid #e5e5e5;
+
+	// Small
+	small {
+		font-size: $baseLineHeight * .75;
+		color: $grayLight;
+	}
+}
+
+.navbar {
+	position: fixed;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+body {
+	padding-top: 70px;
+}
+
+a.brand {
+	color: #fff !important;
+}
+
+.full {
+	width: 100%;
+}
+
+.well {
+	@include clearfix();
+}
+
+.form-compact {
+	margin: 0px;
+
+	.control-group {
+		margin-bottom: 2px;
+	}
+
+	input[type="submit"] {
+		margin-top: $baseLineHeight;
+	}
+}

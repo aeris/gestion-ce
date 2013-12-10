@@ -1,0 +1,45 @@
+<header class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<%= link_to root_path, class: %w(brand) do %>
+				<i class="icon-lock"></i>
+				Gestion CE
+			<% end %>
+			<div>
+				<ul class="nav">
+					<li>
+						<%= link_to admin_path, class: %w(navbar-link) do %>
+							<i class="icon-cog"></i>
+							<%= t 'Admin' %>
+						<% end %>
+					</li>
+				</ul>
+				<% if @me %>
+					<ul class="nav pull-right">
+						<li>
+							<%= link_to logout_path, class: %w(navbar-link) do %>
+								<i class="icon-signout"></i>
+								<%= t 'Sign out' %>
+							<% end %>
+						</li>
+						<li>
+							<a>
+								<i class="icon-user"></i>
+								~<%= @me.login %>
+							</a>
+						</li>
+					</ul>
+				<% else %>
+					<ul class="nav pull-right">
+						<li>
+							<a href="#modal-login" data-toggle="modal" class="navbar-link">
+								<i class="icon-signin"></i>
+								<%= t 'Sign in' %>
+							</a>
+						</li>
+					</ul>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</header>
