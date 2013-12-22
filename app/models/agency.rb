@@ -14,12 +14,12 @@ class Agency < ActiveRecord::Base
 		self.staffs.where(year_id: year).first!.number
 	end
 
-	def available budget
-		year = budget.year
-		(budget.available - budget.common) / year.employees * self.employees(year)
-	end
+        def available budget
+                year = budget.year
+                (budget.available + budget.common) / year.employees * self.employees(year)
+        end
 
-	def used budget
+        def used budget
 		- Entry.total(Entry.where budget_id: budget, agency_id: self)
 	end
 

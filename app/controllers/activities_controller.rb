@@ -1,7 +1,12 @@
 class ActivitiesController < ApplicationController
-	def create
-		@activity = Activity.new params.require(:activity).permit(:description, :date, :plan_debit, :plan_credit, :agency_id, :year_id)
-		@activity.save!
+        def index
+                @year = params[:year].nil? ? Year.current : Year.find_by_year(params[:year])
+                @agencies = params[:agency].nil? ? Agency.all : [Agency.find_by_tag(params[:agency])]
+        end
+
+        def create
+                @activity = Activity.new params.require(:activity).permit(:description, :date, :plan_debit, :plan_credit, :agency_id, :year_id)
+                @activity.save!
 		redirect_to root_path
 	rescue Exception => e
 		flash[:error] = e.message
