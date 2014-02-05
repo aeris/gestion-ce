@@ -1,10 +1,11 @@
 GestionCe::Application.routes.draw do
-	get '/login' => 'site#login'
-	post '/login' => 'site#auth'
-	get '/logout' => 'site#logout'
+	get 'login' => 'site#login'
+	post 'login' => 'site#auth'
+	get 'logout' => 'site#logout'
 
-	get '/admin' => 'site#admin'
-	get '/report' => 'site#report'
+	get 'admin' => 'site#admin'
+	get 'report' => 'site#report'
+	get 'balance' => 'site#balance'
 
 	resources :users
 	resources :years

@@ -32,12 +32,12 @@ class YearsController < ApplicationController
 
 		Account.all.each do |account|
 			residual = params["residual_#{account.tag}"]
-			Budget.get(@year, account).update_attribute! :residual, residual
+			Budget.get(@year, account).update_attribute :residual, residual
 		end
 
 		Agency.all.each do |agency|
 			workforce = params["workforce_#{agency.id}"]
-			Staff.get(@year, agency).update_attribute! :number, workforce
+			Staff.get(@year, agency).update_attribute :number, workforce
 		end
 
 		redirect_to :admin

@@ -17,4 +17,9 @@ class ApplicationController < ActionController::Base
 			redirect_to login_path
 		end
 	end
+
+	def year
+		year = params[:year]
+		year.nil? ? Year.current : Year.find_by_year(year)
+	end
 end

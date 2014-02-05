@@ -9,7 +9,7 @@ class Year < ActiveRecord::Base
 	validates_uniqueness_of :year
 
 	def self.current
-		self.where(year: Date.today.year).first!
+		self.order(year: :desc).limit(1).first!
 	end
 
 	def budget account

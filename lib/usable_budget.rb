@@ -4,6 +4,7 @@ module UsableBudget
 	end
 
 	def percentage budget
-		(self.remaining(budget) / self.available(budget) * 100).floor
+		available = self.available budget
+		available == 0 ? 100 : (self.remaining(budget) / available * 100).floor
 	end
 end

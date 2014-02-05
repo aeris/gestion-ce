@@ -2,7 +2,7 @@ class SiteController < ApplicationController
 	skip_before_filter :require_login, only: [:login, :auth]
 
 	def index
-		@year = Year.current
+		@year = self.year
 	end
 
 	def login
@@ -26,5 +26,9 @@ class SiteController < ApplicationController
 	end
 
 	def admin
+	end
+
+	def balance
+		@year = self.year
 	end
 end

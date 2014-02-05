@@ -1,0 +1,26 @@
+<table class="table table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th><%= t 'Agency' %></th>
+			<th><%= t 'Activity' %></th>
+			<th><%= t 'To' %></th>
+			<th><%= t 'Description' %></th>
+			<th><%= t 'Date' %></th>
+			<th><%= t 'Debit' %></th>
+			<th><%= t 'Credit' %></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @year.entries.order(:date).each do |entry| %>
+			<tr>
+				<th><%= entry.agency.name unless entry.agency.nil? %></th>
+				<th><%= entry.activity.description unless entry.activity.nil? %></th>
+				<th><%= entry.to %></th>
+				<td><%= entry.description %></td>
+				<td><%= l entry.date %></td>
+				<td class="alert-error"><%= entry.debit? ? number_to_currency(-entry.amount) : '' %></td>
+				<td class="alert-success"><%= entry.credit? ? number_to_currency(entry.amount) : '' %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
